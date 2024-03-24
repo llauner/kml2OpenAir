@@ -1,0 +1,22 @@
+{
+  "name": "kml2openair",
+  "version": "1.0.0",
+  "description": "Kml to OpenAir converter",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llauner/kml2OpenAir.git"
+  },
+  "author": "Ludovic Launer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/llauner/kml2OpenAir/issues"
+  },
+  "homepage": "https://github.com/llauner/kml2OpenAir#readme",
+  "dependencies": {
+    "xml2js": "^0.6.2"
+  }
+}
