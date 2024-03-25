@@ -11,7 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\main.js"
+            "program": "${workspaceFolder}\\main.js",
+            "args": ["https://www.stac.aviation-civile.gouv.fr/sites/default/files/france_1.kml"]
         }
     ]
 }

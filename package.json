@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/llauner/kml2OpenAir#readme",
   "dependencies": {
-    "xml2js": "^0.6.2"
+    "xml2js": "^0.6.2",
+    "got": "^9.6.0",
+    "util": "^0.11.1"
   }
 }
