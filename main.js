@@ -8,6 +8,7 @@ var openAirData = '';                                       // OpenAir data to b
 
 // Get URL from command line parameters
 const kmlUrl = process.argv[2];
+const outputFilename = process.argv[3];
 
 
 DownloadKML();
@@ -84,7 +85,7 @@ function ReadandProcess() {
       });
   
       // Write the OpenAir data to a file
-      fs.writeFile('output.txt', openAirData, (err) => {
+      fs.writeFile(outputFilename, openAirData, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
       });
