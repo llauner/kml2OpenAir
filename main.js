@@ -47,13 +47,19 @@ function ReadandProcess() {
   
     xml2js.parseString(data, (err, result) => {
       if (err) throw err;
-  
+
+      // Get Schema name with date
+      var schemaUrl = result.kml.Document[0].Schema[0].$.id;
+      openAirData += `* Date=${schemaUrl}`;
+
       // --- Extract data from KML file ---
       result.kml.Document[0].Folder[0].Placemark.forEach(element => {
         // Get Comment
         var comment = element.ExtendedData[0].SchemaData[0].SimpleData[1]._;
         comment = comment.replace(/\r?\n|\r/g, ''); // Remove new lines
-  
+
+        
+        
         openAirData += sectionHeader(comment);
   
         // Get Coordinates
