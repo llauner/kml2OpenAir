@@ -123,5 +123,5 @@ function convertToDMS(decimalDegrees, isLatitude = true) {
 
 // Create OpenAir section Header
 function sectionHeader(sectionDescription) {
-  return `\n\n**ZONE SENSIBILITE MAXIMUM**\n**Site ZSM Gypaete  Bird Protection Tampon**\nAC UNCLASSIFIED\nAY P\nAN ${sectionDescription}\nAH 600m AGL\nAL GND\n`;
+  return `\n\n**ZONE SENSIBILITE MAXIMUM**\n**Site ZSM Gypaete  Bird Protection Tampon**\nAC UNCLASSIFIED\nAY Q\nAN ${sectionDescription}\nAH 600m AGL\nAL GND\n`;
 }
