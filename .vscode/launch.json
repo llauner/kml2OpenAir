@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\main.js",
-            "args": ["https://www.stac.aviation-civile.gouv.fr/sites/default/files/france_1.kml", "zsm_openair.txt"]
+            "args": ["https://www.stac.aviation-civile.gouv.fr/sites/default/files/france.kml", "zsm_openair.txt"]
         }
     ]
 }

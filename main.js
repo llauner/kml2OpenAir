@@ -33,7 +33,7 @@ fileWriterStream
   })
   .on("finish", () => {
     console.log(`File downloaded to ${kmlFilename}`);
-    ReadandProcess();
+    ReadAndProcess();
   });
 
 downloadStream.pipe(fileWriterStream);
@@ -41,7 +41,7 @@ downloadStream.pipe(fileWriterStream);
 
 
 
-function ReadandProcess() {
+function ReadAndProcess() {
   fs.readFile(kmlFilename, 'utf8', (err, data) => {
     if (err) throw err;
   
@@ -76,8 +76,8 @@ function ReadandProcess() {
           const lat = coordinates[i + 1][1];
   
           // Convert decimal degrees to degrees minutes seconds
-          const lonDMS = convertToDMS(lon, false);
-          const latDMS = convertToDMS(lat, true);
+          const lonDMS = ConvertDDToDMS(lon, true);
+          const latDMS = ConvertDDToDMS(lat, false);
   
           // Populate OpenAir data
           var dpEntry = `DP ${latDMS} ${lonDMS}\n`;
@@ -101,25 +101,38 @@ function ReadandProcess() {
 
 
 // Function to convert decimal degrees to degrees minutes seconds
-function convertToDMS(decimalDegrees, isLatitude = true) {
-  var degrees = Math.floor(decimalDegrees);
-  const minutes = Math.floor((decimalDegrees - degrees) * 60);
-  const seconds = Math.round(((decimalDegrees - degrees) * 60 - minutes) * 60);
+function ConvertDDToDMS(deg, lng) {
 
-  var direction = isLatitude ? 'N' : 'E';
-  if (degrees < 0) {
-    direction = isLatitude ? 'S' : 'W';
-    degrees = Math.abs(degrees);
+  var d = parseInt(deg.toString());
+  var minfloat = Math.abs((deg - d) * 60);
+  var m = Math.floor(minfloat);
+  var secfloat = (minfloat - m) * 60;
+  var s = Math.round((secfloat + Number.EPSILON) * 100) / 100;
+  d = Math.abs(d);
+
+  if (s == 60) {
+    m++;
+    s = 0;
+  }
+  if (m == 60) {
+    d++;
+    m = 0;
   }
 
+  let dms = {
+    dir: deg < 0 ? lng ? 'W' : 'S' : lng ? 'E' : 'N',
+    deg: d,
+    min: m,
+    sec: s
+  };
+
   // Add leading zeros to minutes and seconds
-  const degreesStr = degrees < 10 ? `00${degrees}` : degrees;
-  const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
-  const secondsStr = seconds < 10 ? `0${seconds}` : seconds;
+  const degreesStr = dms.deg < 10 ? `00${dms.deg}` : dms.deg;
+  const minutesStr = dms.min < 10 ? `0${dms.min}` : dms.min;
+  const secondsStr = dms.sec < 10 ? `0${dms.sec}` : dms.sec;
 
-
-  return `${degreesStr}:${minutesStr}:${secondsStr} ${direction}`;
-}
+  return `${degreesStr}:${minutesStr}:${secondsStr} ${dms.dir}`;
+};
 
 // Create OpenAir section Header
 function sectionHeader(sectionDescription) {
