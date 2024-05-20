@@ -11,7 +11,8 @@ const kmlUrl = process.argv[2];
 const outputFilename = process.argv[3];
 
 
-DownloadKML();
+//DownloadKML();
+ReadAndProcess();
 
 // Download KML file from URL
 function DownloadKML() {
@@ -108,6 +109,7 @@ function ConvertDDToDMS(deg, lng) {
   var m = Math.floor(minfloat);
   var secfloat = (minfloat - m) * 60;
   var s = Math.round((secfloat + Number.EPSILON) * 100) / 100;
+  s = Math.floor(s);                                              // Do not keep decimal places for seconds
   d = Math.abs(d);
 
   if (s == 60) {
