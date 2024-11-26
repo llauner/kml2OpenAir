@@ -58,12 +58,22 @@ function ReadAndProcess() {
         var comment = element.ExtendedData[0].SchemaData[0].SimpleData[1]._;
         comment = comment.replace(/\r?\n|\r/g, ''); // Remove new lines
 
-        
-        
+        // Get Max altitude for the zone
+        var altData = element.ExtendedData[0].SchemaData[0].SimpleData[15];
+        var maxElement = element.ExtendedData[0].SchemaData[0].SimpleData.find(data => data.$.name === '_max');
+        var altMaxZone = maxElement._;
+        altMaxZone = parseInt(altMaxZone, 10);        // Convert to integer without decimals
+        altMaxZone = Math.floor(altMaxZone * 0.3048); // Convert to meters and suppress decimal part
+        altMaxZone += 300;                            // Add 300m to altitude of highest point
+    
         openAirData += sectionHeader(comment);
-  
+
+        // Write Altitude
+        openAirData += `AH ${altMaxZone}m AMSL\n`;
+        openAirData += 'AL GND\n';
+
         // Get Coordinates
-        var coordinates = element.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        var coordinates = element.MultiGeometry[0].Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
         coordinates = coordinates.split(' ').map(coordinate => {
           const [lon, lat] = coordinate.split(',');
           return [parseFloat(lon), parseFloat(lat)];
@@ -137,5 +147,5 @@ function ConvertDDToDMS(deg, lng) {
 
 // Create OpenAir section Header
 function sectionHeader(sectionDescription) {
-  return `\n\n**ZONE SENSIBILITE MAXIMUM**\n**Site ZSM Gypaete  Bird Protection Tampon**\nAC UNCLASSIFIED\nAY P\nAN ${sectionDescription}\nAH 300m AGL\nAL GND\n`;
+  return `\n\n**ZONE SENSIBILITE MAXIMUM**\n**Site ZSM Gypaete  Bird Protection Tampon**\nAC UNCLASSIFIED\nAY P\nAN ${sectionDescription}\n`;
 }
