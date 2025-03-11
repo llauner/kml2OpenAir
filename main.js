@@ -76,8 +76,9 @@ function ReadAndProcess() {
         // Get Coordinates
         var coordinates = element.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
         // Remove line breaks and spaces from coordinates
-        coordinates = coordinates.replace(/\r?\n|\r/g, '');
-        coordinates = coordinates.replace(/\s/g, '');
+        coordinates = coordinates.replace(/\r?,0\n|\r/g, '');
+        coordinates = coordinates.replace(/\s+/g, ' '); // Replace multiple spaces with a single space
+        coordinates = coordinates.trim(); // Remove leading and trailing spaces
         coordinates = coordinates.split(' ').map(coordinate => {
           const [lon, lat] = coordinate.split(',');
           return [parseFloat(lon), parseFloat(lat)];
