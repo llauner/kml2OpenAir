@@ -12,6 +12,7 @@ const outputFilename = process.argv[3];
 
 
 DownloadKML();
+//ReadAndProcess();
 
 // Download KML file from URL
 function DownloadKML() {
@@ -53,13 +54,13 @@ function ReadAndProcess() {
       openAirData += `* Date=${schemaUrl}`;
 
       // --- Extract data from KML file ---
-      result.kml.Document[0].Folder[0].Placemark.forEach(element => {
+      result.kml.Document[0].Document[0].Placemark.forEach(element => {
         // Get Comment
-        var comment = element.ExtendedData[0].SchemaData[0].SimpleData[1]._;
+        var comment = element.ExtendedData[0].SchemaData[0].SimpleData.find(data => data.$.name === 'code_zsm')._;
         comment = comment.replace(/\r?\n|\r/g, ''); // Remove new lines
 
         // Get Max altitude for the zone
-        var altData = element.ExtendedData[0].SchemaData[0].SimpleData[15];
+        //var altData = element.ExtendedData[0].SchemaData[0].SimpleData[15];
         var maxElement = element.ExtendedData[0].SchemaData[0].SimpleData.find(data => data.$.name === '_max');
         var altMaxZone = maxElement._;
         altMaxZone = parseInt(altMaxZone, 10);        // Convert to integer without decimals
@@ -73,7 +74,10 @@ function ReadAndProcess() {
         openAirData += 'AL GND\n';
 
         // Get Coordinates
-        var coordinates = element.MultiGeometry[0].Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        var coordinates = element.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        // Remove line breaks and spaces from coordinates
+        coordinates = coordinates.replace(/\r?\n|\r/g, '');
+        coordinates = coordinates.replace(/\s/g, '');
         coordinates = coordinates.split(' ').map(coordinate => {
           const [lon, lat] = coordinate.split(',');
           return [parseFloat(lon), parseFloat(lat)];
