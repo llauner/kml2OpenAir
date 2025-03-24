@@ -54,7 +54,7 @@ function ReadAndProcess() {
       openAirData += `* Date=${schemaUrl}`;
 
       // --- Extract data from KML file ---
-      result.kml.Document[0].Document[0].Placemark.forEach(element => {
+      result.kml.Document[0].Folder[0].Placemark.forEach(element => {
         // Get Comment
         var comment = element.ExtendedData[0].SchemaData[0].SimpleData.find(data => data.$.name === 'code_zsm')._;
         comment = comment.replace(/\r?\n|\r/g, ''); // Remove new lines
@@ -74,7 +74,7 @@ function ReadAndProcess() {
         openAirData += 'AL GND\n';
 
         // Get Coordinates
-        var coordinates = element.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        var coordinates = element.MultiGeometry[0].Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
         // Remove line breaks and spaces from coordinates
         coordinates = coordinates.replace(/\r?,0\n|\r/g, '');
         coordinates = coordinates.replace(/\s+/g, ' '); // Replace multiple spaces with a single space
