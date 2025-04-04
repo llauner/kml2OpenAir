@@ -11,8 +11,8 @@ const kmlUrl = process.argv[2];
 const outputFilename = process.argv[3];
 
 
-DownloadKML();
-//ReadAndProcess();
+//DownloadKML();
+ReadAndProcess();
 
 // Download KML file from URL
 function DownloadKML() {
@@ -61,7 +61,7 @@ function ReadAndProcess() {
 
         // Get Max altitude for the zone
         //var altData = element.ExtendedData[0].SchemaData[0].SimpleData[15];
-        var maxElement = element.ExtendedData[0].SchemaData[0].SimpleData.find(data => data.$.name === '_max');
+        var maxElement = element.ExtendedData[0].SchemaData[0].SimpleData.find(data => data.$.name === 'h_max');
         var altMaxZone = maxElement._;
         altMaxZone = parseInt(altMaxZone, 10);        // Convert to integer without decimals
         altMaxZone = Math.floor(altMaxZone * 0.3048); // Convert to meters and suppress decimal part
@@ -74,7 +74,7 @@ function ReadAndProcess() {
         openAirData += 'AL GND\n';
 
         // Get Coordinates
-        var coordinates = element.MultiGeometry[0].Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        var coordinates = element.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
         // Remove line breaks and spaces from coordinates
         coordinates = coordinates.replace(/\r?,0\n|\r/g, '');
         coordinates = coordinates.replace(/\s+/g, ' '); // Replace multiple spaces with a single space
