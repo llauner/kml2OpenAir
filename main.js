@@ -11,7 +11,7 @@ const kmlUrl = process.argv[2];
 const outputFilename = process.argv[3];
 
 
-//DownloadKML();
+DownloadKML();
 ReadAndProcess();
 
 // Download KML file from URL
@@ -64,7 +64,7 @@ function ReadAndProcess() {
         var maxElement = element.ExtendedData[0].SchemaData[0].SimpleData.find(data => data.$.name === 'h_max');
         var altMaxZone = maxElement._;
         altMaxZone = parseInt(altMaxZone, 10);        // Convert to integer without decimals
-        altMaxZone = Math.floor(altMaxZone * 0.3048); // Convert to meters and suppress decimal part
+        //altMaxZone = Math.floor(altMaxZone * 0.3048); // Convert to meters and suppress decimal part
         altMaxZone += 300;                            // Add 300m to altitude of highest point
     
         openAirData += sectionHeader(comment);
