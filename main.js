@@ -3,7 +3,7 @@ const xml2js = require('xml2js');
 const got = require('got');
 const { createWriteStream } = require("fs");
 
-const kmlFilename = 'zsm.kml';                              // KML file name
+const kmlFilename = 'france.kml';                              // KML file name
 var openAirData = '';                                       // OpenAir data to be written to file
 
 // Get URL from command line parameters
@@ -74,7 +74,7 @@ function ReadAndProcess() {
         openAirData += 'AL GND\n';
 
         // Get Coordinates
-        var coordinates = element.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        var coordinates = element.MultiGeometry[0].Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
         // Remove line breaks and spaces from coordinates
         coordinates = coordinates.replace(/\r?,0\n|\r/g, '');
         coordinates = coordinates.replace(/\s+/g, ' '); // Replace multiple spaces with a single space
