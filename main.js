@@ -11,8 +11,8 @@ const kmlUrl = process.argv[2];
 const outputFilename = process.argv[3];
 
 
-//DownloadKML();
-ReadAndProcess();
+DownloadKML();
+//ReadAndProcess();
 
 // Download KML file from URL
 function DownloadKML() {
