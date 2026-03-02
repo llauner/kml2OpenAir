@@ -11,8 +11,8 @@ const kmlUrl = process.argv[2];
 const outputFilename = process.argv[3];
 
 
-DownloadKML();
-//ReadAndProcess();
+//DownloadKML();
+ReadAndProcess();
 
 // Download KML file from URL
 function DownloadKML() {
@@ -74,7 +74,8 @@ function ReadAndProcess() {
         openAirData += 'AL GND\n';
 
         // Get Coordinates
-        var coordinates = element.MultiGeometry[0].Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        //var coordinates = element.MultiGeometry[0].Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        var coordinates = element.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
         // Remove line breaks and spaces from coordinates
         coordinates = coordinates.replace(/\r?,0\n|\r/g, '');
         coordinates = coordinates.replace(/\s+/g, ' '); // Replace multiple spaces with a single space
